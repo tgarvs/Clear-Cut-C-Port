@@ -18,7 +18,7 @@ class Enemy : public Entity
 public:
     Enemy(int h, sf::Vector2f rs) : health(h), Entity(rs){}
     ~Enemy() {std::cout<< "Enemy Destructor has been called" << std::endl;}
-    virtual void move (const Character& player) = 0;
+    virtual void move (const Character& player, sf::Vector2f& gravity) = 0;
     virtual void hit_animation() {};
     
     int health;
@@ -32,9 +32,9 @@ private:
 class Stalker : public Enemy
 {
 public:
-    Stalker(const float rand_origin);
+    Stalker(const float rand_origin, const float _easing);
     void display (sf::RenderWindow& window) override;
-    void move (const Character& player) override;
+    void move (const Character& player, sf::Vector2f& gravity) override;
 
     
 private:
@@ -46,9 +46,9 @@ private:
 class Rusher : public Enemy
 {
 public:
-    Rusher();
+    Rusher(const float rand_origin, const float _easing);
     void display (sf::RenderWindow& window) override;
-    void move (const Character& player) override;
+    void move (const Character& player, sf::Vector2f& gravity) override;
 
     
 private:
@@ -62,9 +62,9 @@ private:
 class Flyer : public Enemy
 {
 public:
-    Flyer();
+    Flyer(const float rand_origin, const float _easing);
     void display (sf::RenderWindow& window) override;
-    void move (const Character& player) override;
+    void move (const Character& player, sf::Vector2f& gravity) override;
 
 
     
@@ -74,5 +74,32 @@ private:
 };
 
 
+
+class Giant : public Enemy
+{
+public:
+    Giant(const float rand_origin, const float _easing);
+    void display (sf::RenderWindow& window) override;
+    void move (const Character& player, sf::Vector2f& gravity) override;
+
+    
+private:
+    float easing;
+    
+};
+
+
+class King : public Enemy
+{
+public:
+    King(const float rand_origin, const float _easing);
+    void display (sf::RenderWindow& window) override;
+    void move (const Character& player, sf::Vector2f& gravity) override;
+
+    
+private:
+    float easing;
+    
+};
 
 #endif /* Enemies_hpp */

@@ -12,6 +12,10 @@
 		C7518D1F2E2A366900110166 /* Weapons.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7518D1D2E2A366900110166 /* Weapons.cpp */; };
 		C7518D582E2BBF3700110166 /* Entity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7518D562E2BBF3700110166 /* Entity.cpp */; };
 		C7518D5E2E2D73F100110166 /* Enemies.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7518D5C2E2D73F100110166 /* Enemies.cpp */; };
+		C761DA852E36A5710084A093 /* collisions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C761DA832E36A5710084A093 /* collisions.cpp */; };
+		C761DA882E36A6E00084A093 /* updates.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C761DA862E36A6E00084A093 /* updates.cpp */; };
+		C761DA8B2E36A8550084A093 /* utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C761DA892E36A8550084A093 /* utils.cpp */; };
+		C761DA8E2E36A9AA0084A093 /* menus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C761DA8C2E36A9AA0084A093 /* menus.cpp */; };
 		C79E8D002E23D58300D921F6 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C79E8CFF2E23D58300D921F6 /* main.cpp */; };
 		C79E8D162E23E37700D921F6 /* libsfml-graphics.3.0.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C79E8D112E23E37700D921F6 /* libsfml-graphics.3.0.1.dylib */; };
 		C79E8D172E23E37700D921F6 /* libsfml-network.3.0.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C79E8D122E23E37700D921F6 /* libsfml-network.3.0.1.dylib */; };
@@ -43,7 +47,14 @@
 		C7518D572E2BBF3700110166 /* Entity.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Entity.hpp; sourceTree = "<group>"; };
 		C7518D5C2E2D73F100110166 /* Enemies.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Enemies.cpp; sourceTree = "<group>"; };
 		C7518D5D2E2D73F100110166 /* Enemies.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Enemies.hpp; sourceTree = "<group>"; };
-		C7518DCF2E30EA5C00110166 /* Anyfreak.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Anyfreak.ttf; sourceTree = "<group>"; };
+		C761DA832E36A5710084A093 /* collisions.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = collisions.cpp; sourceTree = "<group>"; };
+		C761DA842E36A5710084A093 /* collisions.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = collisions.hpp; sourceTree = "<group>"; };
+		C761DA862E36A6E00084A093 /* updates.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = updates.cpp; sourceTree = "<group>"; };
+		C761DA872E36A6E00084A093 /* updates.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = updates.hpp; sourceTree = "<group>"; };
+		C761DA892E36A8550084A093 /* utils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = utils.cpp; sourceTree = "<group>"; };
+		C761DA8A2E36A8550084A093 /* utils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = utils.hpp; sourceTree = "<group>"; };
+		C761DA8C2E36A9AA0084A093 /* menus.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = menus.cpp; sourceTree = "<group>"; };
+		C761DA8D2E36A9AA0084A093 /* menus.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = menus.hpp; sourceTree = "<group>"; };
 		C79E8CFC2E23D58300D921F6 /* ClearCut_C++Port */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "ClearCut_C++Port"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C79E8CFF2E23D58300D921F6 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		C79E8D072E23D6D200D921F6 /* libsfml-window.3.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libsfml-window.3.0.0.dylib"; path = "ExternalLibraries/SFML/lib/libsfml-window.3.0.0.dylib"; sourceTree = "<group>"; };
@@ -74,14 +85,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		C7518DCE2E30EA5C00110166 /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
-				C7518DCF2E30EA5C00110166 /* Anyfreak.ttf */,
-			);
-			path = Fonts;
-			sourceTree = SOURCE_ROOT;
-		};
 		C79E8CF32E23D58200D921F6 = {
 			isa = PBXGroup;
 			children = (
@@ -106,11 +109,18 @@
 				C7518D172E2554D200110166 /* Character.cpp */,
 				C7518D182E2554D200110166 /* Character.hpp */,
 				C7518D562E2BBF3700110166 /* Entity.cpp */,
-				C7518DCE2E30EA5C00110166 /* Fonts */,
 				C7518D572E2BBF3700110166 /* Entity.hpp */,
 				C7518D5C2E2D73F100110166 /* Enemies.cpp */,
 				C7518D5D2E2D73F100110166 /* Enemies.hpp */,
+				C761DA892E36A8550084A093 /* utils.cpp */,
+				C761DA8A2E36A8550084A093 /* utils.hpp */,
 				C7518D1D2E2A366900110166 /* Weapons.cpp */,
+				C761DA8C2E36A9AA0084A093 /* menus.cpp */,
+				C761DA8D2E36A9AA0084A093 /* menus.hpp */,
+				C761DA832E36A5710084A093 /* collisions.cpp */,
+				C761DA862E36A6E00084A093 /* updates.cpp */,
+				C761DA872E36A6E00084A093 /* updates.hpp */,
+				C761DA842E36A5710084A093 /* collisions.hpp */,
 				C7518D1E2E2A366900110166 /* Weapons.hpp */,
 				C7518D1A2E255FDC00110166 /* Platforms.cpp */,
 				C7518D1B2E255FDC00110166 /* Platforms.hpp */,
@@ -194,8 +204,12 @@
 			files = (
 				C79E8D002E23D58300D921F6 /* main.cpp in Sources */,
 				C7518D1F2E2A366900110166 /* Weapons.cpp in Sources */,
+				C761DA8E2E36A9AA0084A093 /* menus.cpp in Sources */,
+				C761DA882E36A6E00084A093 /* updates.cpp in Sources */,
 				C7518D5E2E2D73F100110166 /* Enemies.cpp in Sources */,
+				C761DA852E36A5710084A093 /* collisions.cpp in Sources */,
 				C7518D192E2554D200110166 /* Character.cpp in Sources */,
+				C761DA8B2E36A8550084A093 /* utils.cpp in Sources */,
 				C7518D582E2BBF3700110166 /* Entity.cpp in Sources */,
 				C7518D1C2E255FDC00110166 /* Platforms.cpp in Sources */,
 			);

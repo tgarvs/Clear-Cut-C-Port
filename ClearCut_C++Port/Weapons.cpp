@@ -19,9 +19,9 @@ void Bullets::display(sf::RenderWindow& window)
 
 void Bullets::move()
 {
-    if(left){location.x-=10;}
-    else{location.x+=10;}
-    size -= 0.5f;
+    if(left){location.x-=50;}
+    else{location.x+=50;}
+    size -= 1.f;
 }
 
 

@@ -48,7 +48,7 @@ void Character::display (sf::RenderWindow& window)
 }
 
 
-void Character::move ()
+void Character::move (sf::Vector2f gravity)
 {
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::D)){
         isLeft = false;
@@ -80,6 +80,7 @@ void Character::move ()
         }
     }
     
+    applyForce(gravity);
 }
 
 

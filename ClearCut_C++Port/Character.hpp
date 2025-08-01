@@ -21,13 +21,14 @@ public:
     ~Character() = default;
     
     void display (sf::RenderWindow& window) override;
-    void move ();
+    void move (sf::Vector2f gravity);
 //    void applyForce(sf::Vector2f force) override;
 //    void collision_control(Platform& plat) override;
     
 
     bool isLeft;
     bool canGetHit;
+    bool canShoot;
     int health;
     
 private:
