@@ -16,14 +16,21 @@
 class Enemy : public Entity
 {
 public:
-    Enemy(int h, sf::Vector2f rs) : health(h), Entity(rs){}
+    
+    Enemy(int h, std::string _texture) : health(h), Entity(_texture){
+        red_clock.reset();
+    }
     ~Enemy() {std::cout<< "Enemy Destructor has been called" << std::endl;}
     virtual void move (const Character& player, sf::Vector2f& gravity) = 0;
-    virtual void hit_animation() {};
+    void hit_animation();
     
     int health;
+    sf::Texture red_texture;
+    sf::Clock red_clock;
+
     
 private:
+    
     
 };
 

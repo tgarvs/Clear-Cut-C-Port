@@ -32,11 +32,11 @@ void game_over(){
 
 
 
-void play_game(Character& player_one, std::vector<std::unique_ptr<Enemy>>& enemy_list, std::vector<Platform>& platform_list,  std::vector<Bullets>& active_bullets, std::vector<Funding_round>& active_fr, sf::RenderWindow& window, bool& level_start, int& level, sf::Vector2f& gravity, sf::Texture& bkg, std::unordered_map<std::string, std::string>& background_images, sf::Clock& shareholder_clock, sf::Clock& health_delay_clock){
+void play_game(Character& player_one, std::vector<std::unique_ptr<Enemy>>& enemy_list, std::vector<std::unique_ptr<Platform>>& platform_list,  std::vector<Bullets>& active_bullets, std::vector<Funding_round>& active_fr, sf::RenderWindow& window, bool& level_start, int& level, sf::Vector2f& gravity, sf::Texture& bkg, std::unordered_map<std::string, std::string>& background_images, sf::Clock& shareholder_clock, sf::Clock& health_delay_clock, sf::Texture& gBulletTexture, sf::Texture& funding_round_texture, sf::Sprite& background){
 
     //drawing platforms
     for (int i = 0; i < platform_list.size(); ++i){
-    platform_list[i].display(window);
+        platform_list[i]->display(window);
     }
 
     //Update player
@@ -52,87 +52,89 @@ void play_game(Character& player_one, std::vector<std::unique_ptr<Enemy>>& enemy
             if(!bkg.loadFromFile(background_images.at("first_bkg"))){
                 std::cerr << "Unable to load menu screen" << std::endl;
             }
-            spawn_enemies(enemy_list, 50, 0, 0, 0, 0);
+            spawn_enemies(enemy_list, 2, 0, 0, 0, 0);
             level_start = false;
             break;
         case 2 :
             if(!bkg.loadFromFile(background_images.at("first_bkg"))){
                 std::cerr << "Unable to load menu screen" << std::endl;
             }
-            spawn_enemies(enemy_list, 0, 10, 0, 0, 0);
+            spawn_enemies(enemy_list, 0, 2, 0, 0, 0);
             level_start = false;
             break;
         case 3 :
             if(!bkg.loadFromFile(background_images.at("first_bkg"))){
                 std::cerr << "Unable to load menu screen" << std::endl;
             }
-            spawn_enemies(enemy_list, 0, 10, 0, 0, 0);
+            spawn_enemies(enemy_list, 0, 0, 2, 0, 0);
             level_start = false;
             break;
         case 4 :
             if(!bkg.loadFromFile(background_images.at("second_bkg"))){
                 std::cerr << "Unable to load menu screen" << std::endl;
             }
-            spawn_enemies(enemy_list, 0, 10, 0, 0, 0);
+            spawn_enemies(enemy_list, 0, 0, 0, 2, 0);
             level_start = false;
             break;
         case 5 :
             if(!bkg.loadFromFile(background_images.at("second_bkg"))){
                 std::cerr << "Unable to load menu screen" << std::endl;
             }
-            spawn_enemies(enemy_list, 0, 10, 0, 0, 0);
+            spawn_enemies(enemy_list, 0, 0, 0, 0, 2);
             level_start = false;
             break;
         case 6 :
             if(!bkg.loadFromFile(background_images.at("second_bkg"))){
                 std::cerr << "Unable to load menu screen" << std::endl;
             }
-            spawn_enemies(enemy_list, 0, 10, 0, 0, 0);
+            spawn_enemies(enemy_list, 1, 0, 0, 0, 0);
             level_start = false;
             break;
         case 7 :
             if(!bkg.loadFromFile(background_images.at("third_bkg"))){
                 std::cerr << "Unable to load menu screen" << std::endl;
             }
-            spawn_enemies(enemy_list, 0, 10, 0, 0, 0);
+            spawn_enemies(enemy_list, 1, 0, 0, 0, 0);
             level_start = false;
             break;
         case 8 :
             if(!bkg.loadFromFile(background_images.at("third_bkg"))){
                 std::cerr << "Unable to load menu screen" << std::endl;
             }
-            spawn_enemies(enemy_list, 0, 10, 0, 0, 0);
+            spawn_enemies(enemy_list, 1, 0, 0, 0, 0);
             level_start = false;
             break;
         case 9 :
             if(!bkg.loadFromFile(background_images.at("third_bkg"))){
                 std::cerr << "Unable to load menu screen" << std::endl;
             }
-            spawn_enemies(enemy_list, 0, 10, 0, 0, 0);
+            spawn_enemies(enemy_list, 1, 0, 0, 0, 0);
             level_start = false;
             break;
         case 10 :
             if(!bkg.loadFromFile(background_images.at("fourth_bkg"))){
                 std::cerr << "Unable to load menu screen" << std::endl;
             }
-            spawn_enemies(enemy_list, 0, 10, 0, 0, 0);
+            spawn_enemies(enemy_list, 1, 0, 0, 0, 0);
             level_start = false;
             break;
         default :
             break;
-    }
+        }
     }
 
 
     //Update enemies if there are any, if not, go to next level
     if(!enemy_list.empty() && !level_start){
-    for(auto& enemy : enemy_list){
-        enemy->move(player_one, gravity);
-        enemy->display(window);
+        for(auto& enemy : enemy_list){
+            enemy->move(player_one, gravity);
+            enemy->display(window);
+        }
     }
-    }
+    
+    
     else if (enemy_list.empty() && !level_start){
-    change_level();
+    change_level(level, bkg, background_images, background, window);
     level++;
     level_start = true;
     }
@@ -142,11 +144,14 @@ void play_game(Character& player_one, std::vector<std::unique_ptr<Enemy>>& enemy
     collision_check(player_one, platform_list, enemy_list, health_delay_clock);
 
 
-    //draw bullets
+    
 
+    
+    
+    //draw bullets
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::L) && player_one.canShoot){
-    active_bullets.push_back(Bullets({player_one.location.x, player_one.location.y}, player_one.isLeft));
-    player_one.canShoot = false;
+        active_bullets.push_back(Bullets({player_one.location.x, player_one.location.y}, player_one.isLeft, gBulletTexture));
+        player_one.canShoot = false;
     }
     //updating bullets
     if(!active_bullets.empty()){
@@ -157,9 +162,14 @@ void play_game(Character& player_one, std::vector<std::unique_ptr<Enemy>>& enemy
     bullet_enemy_collision(active_bullets, enemy_list, shareholder_clock);
     }
 
+    
+    
+    
+    
+    
     //Funding Rounds
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::K)){
-    active_fr.push_back(Funding_round(player_one.location));
+    active_fr.push_back(Funding_round(player_one.location, funding_round_texture));
     }
     //Updating funding rounds
     if(!active_fr.empty()){

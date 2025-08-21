@@ -26,7 +26,13 @@ public:
     float height;
     float half_width;
     float half_height;
+    
+    
     sf::RectangleShape rect;
+    
+    
+    sf::Texture texture;
+    std::unique_ptr<sf::Sprite> sprite;
 private:
 
 

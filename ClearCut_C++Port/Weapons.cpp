@@ -10,9 +10,27 @@
 
 void Bullets::display(sf::RenderWindow& window)
 {
-    rect.setSize({size, size});
-    rect.setPosition(location);
-    window.draw(rect);
+    hold = (hold+1) % delay;
+    if(hold == 0){
+        if(row < h){
+            row += h;
+        }
+        else{
+            row = 0;
+        }
+        sprite->setTextureRect(sf::IntRect({0, row}, {w, h}));
+    }
+    
+    sprite->setPosition(location);
+    window.draw(*sprite);
+    
+    
+//    sf::RectangleShape outline (sprite->getGlobalBounds().size);
+//    outline.setPosition(sprite->getGlobalBounds().position);
+//    outline.setOutlineColor(sf::Color::White);
+//    outline.setOutlineThickness(5);
+//    outline.setFillColor(sf::Color::Transparent);
+//    window.draw(outline);
 }
 
 
@@ -21,7 +39,6 @@ void Bullets::move()
 {
     if(left){location.x-=50;}
     else{location.x+=50;}
-    size -= 1.f;
 }
 
 
@@ -32,20 +49,27 @@ void Bullets::move()
 
 void Funding_round::display(sf::RenderWindow& window)
 {
-    rect.setOrigin({size, size});
-    rect.setPosition(location);
-    rect.setRadius(size);
-    window.draw(rect);
+    hold = (hold+1) % delay;
+    if(hold == 0){
+        if(row < h*11){
+            row += h;
+            size+=2; //scale should get up to 11?
+        }
+        else{
+            row = 0;
+        }
+        sprite->setScale({size, size});
+        sprite->setTextureRect(sf::IntRect({0, row}, {w, h}));
+    }
+    window.draw(*sprite);
+    
+//    sf::RectangleShape outline (sprite->getGlobalBounds().size);
+//    outline.setPosition(sprite->getGlobalBounds().position);
+//    outline.setOutlineColor(sf::Color::White);
+//    outline.setOutlineThickness(5);
+//    outline.setFillColor(sf::Color::Transparent);
+//    window.draw(outline);
 }
 
 
 
-void Funding_round::move()
-{
-    size+=5;
-    stroke-=0.5;
-}
-
-float Funding_round::get_stroke(){
-    return stroke;
-}

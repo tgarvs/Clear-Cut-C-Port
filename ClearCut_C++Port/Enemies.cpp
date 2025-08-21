@@ -8,23 +8,29 @@
 #include "Enemies.hpp"
 
 
+void Enemy::hit_animation()
+{
+
+}
 
 
-
-Stalker::Stalker(const float rand_origin, const float _easing): Enemy(5, {100, 200}), easing(_easing) {
-    //Set initial conditions and configs for the rectangle shape
-    std::cout << _easing << std::endl;
-    std::cout << easing << std::endl;
-    rect.setFillColor(sf::Color::Yellow);
-    auto origin_x = rect.getSize().x/2;
-    auto origin_y = rect.getSize().y/2;
-    rect.setOrigin({origin_x, origin_y});
-    rect.setPosition(location);
+Stalker::Stalker(const float rand_origin, const float _easing): Enemy(3, "./All_Assets/Sprites/stalkerSprite.png"), easing(_easing) {
     
     //Set intial movement conditions for rect
     location = {rand_origin, 100};
     velocity = {0, 0};
     acceleration = {0, 0};
+    
+    float origin_x {sprite->getGlobalBounds().size.x/2};
+    float origin_y {sprite->getGlobalBounds().size.y/2};
+    sprite->setOrigin({origin_x, origin_y});
+    sprite->setPosition(location);
+    sprite->setScale({1.2, 1.2});
+    
+    if(!red_texture.loadFromFile("./All_Assets/Sprites/stalkerSpriteRed.png")){
+        std::cerr << "Unable to load character sprite" << std::endl;
+    }
+    
 }
 
 
@@ -32,33 +38,48 @@ void Stalker::display (sf::RenderWindow& window)
 {
     velocity += acceleration;
     location += velocity;
-    rect.setPosition(location);
+    sprite->setPosition(location);
     
     
     //Check Bounds
-    if((rect.getPosition().x + rect.getSize().x/2) >= window.getSize().x){
+    if((sprite->getPosition().x + sprite->getGlobalBounds().size.x/2) >= window.getSize().x){
         velocity = {0,0};
-        location.x = window.getSize().x - rect.getSize().x/2;
+        location.x = window.getSize().x - sprite->getGlobalBounds().size.x/2;
     }
-    if((rect.getPosition().x - rect.getSize().x/2) <= 0){
+    if((sprite->getPosition().x - sprite->getGlobalBounds().size.x/2) <= 0){
         velocity = {0,0};
-        location.x = rect.getSize().x/2;
+        location.x = sprite->getGlobalBounds().size.x/2;
     }
     
-//    acceleration = {0.f, 0.f};
-    window.draw(rect);
     
+    //Red Hit Texture
+    if(red_clock.isRunning() && red_clock.getElapsedTime()<sf::seconds(0.5f)){
+        sprite->setTexture(red_texture);
+    }
+    else if (red_clock.getElapsedTime()>sf::seconds(0.5f)){
+        sprite->setTexture(texture);
+        red_clock.reset();
+    }
+    
+    
+    window.draw(*sprite);
+//    sf::RectangleShape outline (sprite->getGlobalBounds().size);
+//    outline.setPosition(sprite->getGlobalBounds().position);
+//    outline.setOutlineColor(sf::Color::White);
+//    outline.setOutlineThickness(5);
+//    outline.setFillColor(sf::Color::Transparent);
+//    window.draw(outline);
 }
 
 
 void Stalker::move (const Character& player, sf::Vector2f& gravity){
     applyForce(gravity);
 
-    float targetX = player.location.x + player.rect.getSize().x/2;
+    float targetX = player.location.x;
     float dx = targetX - location.x;
     location.x += dx * easing;
     
-    float targetY = player.location.y + player.rect.getSize().y/2;
+    float targetY = player.location.y;
     float dy = targetY - location.y;
     location.y += dy * easing; //enemy moves towards player at rate of easing
 }
@@ -66,36 +87,67 @@ void Stalker::move (const Character& player, sf::Vector2f& gravity){
 
 
 
+
+
+
 //RUSHER CLASS METHODS
-Rusher::Rusher(const float rand_origin, const float _easing): Enemy(5, {100, 200}), easing(_easing) {
-    //Set initial conditions and configs for the rectangle shape
-    rect.setFillColor(sf::Color::Blue);
-    auto origin_x = rect.getSize().x/2;
-    auto origin_y = rect.getSize().y/2;
-    rect.setOrigin({origin_x, origin_y});
-    rect.setPosition(location);
-    
+Rusher::Rusher(const float rand_origin, const float _easing): Enemy(10, "./All_Assets/Sprites/rusherSprite.png"), easing(_easing) {
     //Set intial movement conditions for rect
     location = {rand_origin, 100};
     velocity = {0, 0};
     acceleration = {0, 0};
+    
+    float origin_x {sprite->getGlobalBounds().size.x/2};
+    float origin_y {sprite->getGlobalBounds().size.y/2};
+    sprite->setOrigin({origin_x, origin_y});
+    sprite->setPosition(location);
+    sprite->setScale({1.2, 1.2});
+    
+    if(!red_texture.loadFromFile("./All_Assets/Sprites/rusherSpriteRed.png")){
+        std::cerr << "Unable to load character sprite" << std::endl;
+    }
 }
 
 
 void Rusher::display (sf::RenderWindow& window)
 {
-    velocity += acceleration;
+    if(velocity.x <= 10){
+        velocity += acceleration;
+    }
+    else{
+        velocity.x = 11;
+    }
     location += velocity;
-    rect.setPosition(location);
+    sprite->setPosition(location);
     
     
     //Check Bounds
-    if((rect.getPosition().x + rect.getSize().x/2) >= window.getSize().x || (rect.getPosition().x - rect.getSize().x/2) <= 0){
-        velocity.x *= -1;
+    if((sprite->getPosition().x + sprite->getGlobalBounds().size.x/2) >= window.getSize().x + 500){
+        velocity = {0,0};
+        location.x = (window.getSize().x+500) - sprite->getGlobalBounds().size.x/2;
+    }
+    if((sprite->getPosition().x - sprite->getGlobalBounds().size.x/2) <= -500){
+        velocity = {0,0};
+        location.x = -500 + sprite->getGlobalBounds().size.x/2;
+    }
+    
+    //Red Hit Texture
+    if(red_clock.isRunning() && red_clock.getElapsedTime()<sf::seconds(0.5f)){
+        sprite->setTexture(red_texture);
+    }
+    else if (red_clock.getElapsedTime()>sf::seconds(0.5f)){
+        sprite->setTexture(texture);
+        red_clock.reset();
     }
     
     
-    window.draw(rect);
+    window.draw(*sprite);
+//    sf::RectangleShape outline (sprite->getGlobalBounds().size);
+//    outline.setPosition(sprite->getGlobalBounds().position);
+//    outline.setOutlineColor(sf::Color::White);
+//    outline.setOutlineThickness(5);
+//    outline.setFillColor(sf::Color::Transparent);
+//    window.draw(outline);
 }
 
 
@@ -114,19 +166,25 @@ void Rusher::move (const Character& player, sf::Vector2f& gravity){
 
 
 
+
+
+
 //Flyer CLASS METHODS
-Flyer::Flyer(const float rand_origin, const float _easing): Enemy(5, {50, 50}), easing(_easing) {
-    //Set initial conditions and configs for the rectangle shape
-    rect.setFillColor(sf::Color::Magenta);
-    auto origin_x = rect.getSize().x/2;
-    auto origin_y = rect.getSize().y/2;
-    rect.setOrigin({origin_x, origin_y});
-    rect.setPosition(location);
-    
+Flyer::Flyer(const float rand_origin, const float _easing): Enemy(5, "./All_Assets/Sprites/flyingSprite.png"), easing(_easing) {
     //Set intial movement conditions for rect
     location = {rand_origin, 100};
     velocity = {0, 0};
     acceleration = {0, 0};
+    
+    float origin_x {sprite->getGlobalBounds().size.x/2};
+    float origin_y {sprite->getGlobalBounds().size.y/2};
+    sprite->setOrigin({origin_x, origin_y});
+    sprite->setPosition(location);
+    sprite->setScale({0.4, 0.4});
+    
+    if(!red_texture.loadFromFile("./All_Assets/Sprites/flyingSpriteRed.png")){
+        std::cerr << "Unable to load character sprite" << std::endl;
+    }
 }
 
 
@@ -134,17 +192,38 @@ void Flyer::display (sf::RenderWindow& window)
 {
     velocity += acceleration;
     location += velocity;
-    rect.setPosition(location);
+    sprite->setPosition(location);
     
     
     //Check Bounds
-    if((rect.getPosition().x + rect.getSize().x/2) >= window.getSize().x || (rect.getPosition().x - rect.getSize().x/2) <= 0){
+    if((sprite->getPosition().x + sprite->getGlobalBounds().size.x/2) >= window.getSize().x){
         velocity.x *= -1;
+        
+//        velocity = {0,0};
+//        location.x = window.getSize().x - sprite->getGlobalBounds().size.x/2;
     }
-
+    if((sprite->getPosition().x - sprite->getGlobalBounds().size.x/2) <= 0){
+        velocity.x *= -1;
+//        velocity = {0,0};
+//        location.x = sprite->getGlobalBounds().size.x/2;
+    }
     
-//    acceleration = {0.f, 0.f};
-    window.draw(rect);
+    //Red Hit Texture
+    if(red_clock.isRunning() && red_clock.getElapsedTime()<sf::seconds(0.5f)){
+        sprite->setTexture(red_texture);
+    }
+    else if (red_clock.getElapsedTime()>sf::seconds(0.5f)){
+        sprite->setTexture(texture);
+        red_clock.reset();
+    }
+    
+    window.draw(*sprite);
+//    sf::RectangleShape outline (sprite->getGlobalBounds().size);
+//    outline.setPosition(sprite->getGlobalBounds().position);
+//    outline.setOutlineColor(sf::Color::White);
+//    outline.setOutlineThickness(5);
+//    outline.setFillColor(sf::Color::Transparent);
+//    window.draw(outline);
 }
 
 
@@ -159,20 +238,21 @@ void Flyer::move (const Character& player, sf::Vector2f& gravity){
 
 
 //Giants
-Giant::Giant(const float rand_origin, const float _easing): Enemy(5, {100, 200}), easing(_easing) {
-    //Set initial conditions and configs for the rectangle shape
-    std::cout << _easing << std::endl;
-    std::cout << easing << std::endl;
-    rect.setFillColor(sf::Color::Yellow);
-    auto origin_x = rect.getSize().x/2;
-    auto origin_y = rect.getSize().y/2;
-    rect.setOrigin({origin_x, origin_y});
-    rect.setPosition(location);
-    
+Giant::Giant(const float rand_origin, const float _easing): Enemy(5, "./All_Assets/Sprites/giantSprite.png"), easing(_easing) {
     //Set intial movement conditions for rect
     location = {rand_origin, 100};
     velocity = {0, 0};
     acceleration = {0, 0};
+    
+    float origin_x {sprite->getGlobalBounds().size.x/2};
+    float origin_y {sprite->getGlobalBounds().size.y/2};
+    sprite->setOrigin({origin_x, origin_y});
+    sprite->setPosition(location);
+    sprite->setScale({1.7, 1.7});
+    
+    if(!red_texture.loadFromFile("./All_Assets/Sprites/giantSpriteRed.png")){
+        std::cerr << "Unable to load character sprite" << std::endl;
+    }
 }
 
 
@@ -180,22 +260,35 @@ void Giant::display (sf::RenderWindow& window)
 {
     velocity += acceleration;
     location += velocity;
-    rect.setPosition(location);
+    sprite->setPosition(location);
     
     
     //Check Bounds
-    if((rect.getPosition().x + rect.getSize().x/2) >= window.getSize().x){
+    if((sprite->getPosition().x + sprite->getGlobalBounds().size.x/2) >= window.getSize().x){
         velocity = {0,0};
-        location.x = window.getSize().x - rect.getSize().x/2;
+        location.x = window.getSize().x - sprite->getGlobalBounds().size.x/2;
     }
-    if((rect.getPosition().x - rect.getSize().x/2) <= 0){
+    if((sprite->getPosition().x - sprite->getGlobalBounds().size.x/2) <= 0){
         velocity = {0,0};
-        location.x = rect.getSize().x/2;
+        location.x = sprite->getGlobalBounds().size.x/2;
     }
     
-//    acceleration = {0.f, 0.f};
-    window.draw(rect);
+    //Red Hit Texture
+    if(red_clock.isRunning() && red_clock.getElapsedTime()<sf::seconds(0.5f)){
+        sprite->setTexture(red_texture);
+    }
+    else if (red_clock.getElapsedTime()>sf::seconds(0.5f)){
+        sprite->setTexture(texture);
+        red_clock.reset();
+    }
     
+    window.draw(*sprite);
+//    sf::RectangleShape outline (sprite->getGlobalBounds().size);
+//    outline.setPosition(sprite->getGlobalBounds().position);
+//    outline.setOutlineColor(sf::Color::White);
+//    outline.setOutlineThickness(5);
+//    outline.setFillColor(sf::Color::Transparent);
+//    window.draw(outline);
 }
 
 
@@ -218,18 +311,21 @@ void Giant::move (const Character& player, sf::Vector2f& gravity){
 
 
 //Kings CLASS METHODS
-King::King(const float rand_origin, const float _easing): Enemy(5, {100, 200}), easing(_easing) {
-    //Set initial conditions and configs for the rectangle shape
-    rect.setFillColor(sf::Color::Blue);
-    auto origin_x = rect.getSize().x/2;
-    auto origin_y = rect.getSize().y/2;
-    rect.setOrigin({origin_x, origin_y});
-    rect.setPosition(location);
-    
+King::King(const float rand_origin, const float _easing): Enemy(5, "./All_Assets/Sprites/bossSprite.png"), easing(_easing) {
     //Set intial movement conditions for rect
     location = {rand_origin, 100};
     velocity = {0, 0};
     acceleration = {0, 0};
+    
+    float origin_x {sprite->getGlobalBounds().size.x/2};
+    float origin_y {sprite->getGlobalBounds().size.y/2};
+    sprite->setOrigin({origin_x, origin_y});
+    sprite->setPosition(location);
+    sprite->setScale({2.0, 2.0});
+    
+    if(!red_texture.loadFromFile("./All_Assets/Sprites/bossSpriteRed.png")){
+        std::cerr << "Unable to load character sprite" << std::endl;
+    }
 }
 
 
@@ -237,16 +333,35 @@ void King::display (sf::RenderWindow& window)
 {
     velocity += acceleration;
     location += velocity;
-    rect.setPosition(location);
+    sprite->setPosition(location);
     
     
     //Check Bounds
-    if((rect.getPosition().x + rect.getSize().x/2) >= window.getSize().x || (rect.getPosition().x - rect.getSize().x/2) <= 0){
-        velocity.x *= -1;
+    if((sprite->getPosition().x + sprite->getGlobalBounds().size.x/2) >= window.getSize().x){
+        velocity = {0,0};
+        location.x = window.getSize().x - sprite->getGlobalBounds().size.x/2;
+    }
+    if((sprite->getPosition().x - sprite->getGlobalBounds().size.x/2) <= 0){
+        velocity = {0,0};
+        location.x = sprite->getGlobalBounds().size.x/2;
     }
     
+    //Red Hit Texture
+    if(red_clock.isRunning() && red_clock.getElapsedTime()<sf::seconds(0.5f)){
+        sprite->setTexture(red_texture);
+    }
+    else if (red_clock.getElapsedTime()>sf::seconds(0.5f)){
+        sprite->setTexture(texture);
+        red_clock.reset();
+    }
     
-    window.draw(rect);
+    window.draw(*sprite);
+//    sf::RectangleShape outline (sprite->getGlobalBounds().size);
+//    outline.setPosition(sprite->getGlobalBounds().position);
+//    outline.setOutlineColor(sf::Color::White);
+//    outline.setOutlineThickness(5);
+//    outline.setFillColor(sf::Color::Transparent);
+//    window.draw(outline);
 }
 
 

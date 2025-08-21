@@ -17,7 +17,13 @@ class Entity {
     
 public:
     
-    Entity(sf::Vector2f rect_shape) : rect(rect_shape){};
+    Entity(std::string _texture){
+        if(!texture.loadFromFile(_texture)){
+            std::cerr << "Unable to load character sprite" << std::endl;
+        }
+        sprite = std::make_unique<sf::Sprite>(texture);
+    };
+    
     virtual ~Entity(){};
     
     virtual void display (sf::RenderWindow& window) = 0;
@@ -29,6 +35,11 @@ public:
     sf::Vector2f velocity;
     sf::Vector2f acceleration;
     bool isOnPlatform;
+    
+    
+    sf::Texture texture;
+    std::unique_ptr<sf::Sprite> sprite;
+
 };
 
 

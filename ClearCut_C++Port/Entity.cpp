@@ -20,17 +20,12 @@ void Entity::collision_control(Platform& plat)
     acceleration.y = 0;
     velocity.y = 0;
     
-//    //if it falls thru platform partially, reset it so it stays on top of the platform
-//    if(location.y + rect.getSize().y/2 > plat.location.y){
-//        location.y -= (location.y + rect.getSize().y/2) - plat.location.y;
-//    }
-    
-    float bottomOfEntity = location.y + rect.getSize().y / 2;
+    float bottomOfEntity = sprite->getPosition().y + sprite->getGlobalBounds().size.y/2; //sprite->getTextureRect().size.y/2;
     float topOfPlatform = plat.location.y;
 
     if (bottomOfEntity > topOfPlatform) {
         // Snap entity to top of platform
         location.y -= (bottomOfEntity - topOfPlatform);
-        rect.setPosition(location); // update rectangle position
+        sprite->setPosition(location);
     }
 }
