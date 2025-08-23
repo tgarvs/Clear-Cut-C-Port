@@ -16,6 +16,7 @@
 		C761DA882E36A6E00084A093 /* updates.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C761DA862E36A6E00084A093 /* updates.cpp */; };
 		C761DA8B2E36A8550084A093 /* utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C761DA892E36A8550084A093 /* utils.cpp */; };
 		C761DA8E2E36A9AA0084A093 /* menus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C761DA8C2E36A9AA0084A093 /* menus.cpp */; };
+		C77BC1A02E59DAF10042D9A5 /* Text_class.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C77BC19E2E59DAF10042D9A5 /* Text_class.cpp */; };
 		C79E8D002E23D58300D921F6 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C79E8CFF2E23D58300D921F6 /* main.cpp */; };
 		C79E8D162E23E37700D921F6 /* libsfml-graphics.3.0.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C79E8D112E23E37700D921F6 /* libsfml-graphics.3.0.1.dylib */; };
 		C79E8D172E23E37700D921F6 /* libsfml-network.3.0.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C79E8D122E23E37700D921F6 /* libsfml-network.3.0.1.dylib */; };
@@ -56,6 +57,8 @@
 		C761DA8C2E36A9AA0084A093 /* menus.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = menus.cpp; sourceTree = "<group>"; };
 		C761DA8D2E36A9AA0084A093 /* menus.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = menus.hpp; sourceTree = "<group>"; };
 		C761DE252E4E45510084A093 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		C77BC19E2E59DAF10042D9A5 /* Text_class.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Text_class.cpp; sourceTree = "<group>"; };
+		C77BC19F2E59DAF10042D9A5 /* Text_class.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Text_class.hpp; sourceTree = "<group>"; };
 		C79E8CFC2E23D58300D921F6 /* ClearCut_C++Port */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "ClearCut_C++Port"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C79E8CFF2E23D58300D921F6 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		C79E8D072E23D6D200D921F6 /* libsfml-window.3.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libsfml-window.3.0.0.dylib"; path = "ExternalLibraries/SFML/lib/libsfml-window.3.0.0.dylib"; sourceTree = "<group>"; };
@@ -118,6 +121,8 @@
 				C7518D1D2E2A366900110166 /* Weapons.cpp */,
 				C761DA8C2E36A9AA0084A093 /* menus.cpp */,
 				C761DA8D2E36A9AA0084A093 /* menus.hpp */,
+				C77BC19E2E59DAF10042D9A5 /* Text_class.cpp */,
+				C77BC19F2E59DAF10042D9A5 /* Text_class.hpp */,
 				C761DA832E36A5710084A093 /* collisions.cpp */,
 				C761DA862E36A6E00084A093 /* updates.cpp */,
 				C761DA872E36A6E00084A093 /* updates.hpp */,
@@ -208,6 +213,7 @@
 				C7518D1F2E2A366900110166 /* Weapons.cpp in Sources */,
 				C761DA8E2E36A9AA0084A093 /* menus.cpp in Sources */,
 				C761DA882E36A6E00084A093 /* updates.cpp in Sources */,
+				C77BC1A02E59DAF10042D9A5 /* Text_class.cpp in Sources */,
 				C7518D5E2E2D73F100110166 /* Enemies.cpp in Sources */,
 				C761DA852E36A5710084A093 /* collisions.cpp in Sources */,
 				C7518D192E2554D200110166 /* Character.cpp in Sources */,

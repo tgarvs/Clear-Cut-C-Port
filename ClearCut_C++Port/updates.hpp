@@ -25,7 +25,7 @@
 void update_bullets(std::vector<Bullets>& active_bullets, sf::RenderWindow& window);
 void update_funding_round(std::vector<Funding_round>& active_fr, sf::RenderWindow& window);
 
-void spawn_enemies(std::vector<std::unique_ptr<Enemy>>& enemy_list, int amountStalkers, int amountRushers, int amountFlyers, int amountGiants, int amountKings, float window_x = 5000.f);
-void change_level(int level, sf::Texture& bkg, std::unordered_map<std::string, std::string>& background_images, sf::Sprite& background, sf::RenderWindow& window);
+void spawn_enemies(std::vector<std::unique_ptr<Enemy>>& enemy_list, int amountStalkers, int amountRushers, int amountFlyers, int amountGiants, int amountKings, float window_x);
+
 
 #endif /* updates_hpp */

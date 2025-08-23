@@ -16,6 +16,7 @@ Character::Character()
     velocity = {0, 0};
     acceleration = {0, 0};
     
+    
     sprite->setTextureRect(sf::IntRect({column, 0}, {w, h}));
     int origin_x {sprite->getTextureRect().size.x/2};
     int origin_y {sprite->getTextureRect().size.y/2};
@@ -44,12 +45,6 @@ void Character::display (sf::RenderWindow& window)
     }
 
     window.draw(*sprite);
-//    sf::RectangleShape outline (sprite->getGlobalBounds().size);
-//    outline.setPosition(sprite->getGlobalBounds().position);
-//    outline.setOutlineColor(sf::Color::White);
-//    outline.setOutlineThickness(5);
-//    outline.setFillColor(sf::Color::Transparent);
-//    window.draw(outline);
     
 }
 
@@ -91,11 +86,22 @@ void Character::move (sf::Vector2f gravity)
     
     
     if(velocity.y < 0){
-        animate(2);
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::L)){
+            animate(4);
+        }
+       else{
+           animate(2);
+       }
     }
     else if(velocity.y > 0){
-        animate(3);
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::L)){
+            animate(4);
+        }
+       else{
+           animate(3);
+       }
     }
+
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::A)){
         animate(0);
     }
@@ -108,6 +114,7 @@ void Character::move (sf::Vector2f gravity)
     else{
         animate(5);
     }
+
     
     applyForce(gravity);
 }

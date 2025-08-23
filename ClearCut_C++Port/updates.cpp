@@ -17,7 +17,6 @@ void update_bullets(std::vector<Bullets>& active_bullets, sf::RenderWindow& wind
                 bulletIt->move();
                 bulletIt->display(window);
                 ++bulletIt;
-                
         }
     }
 }
@@ -40,17 +39,23 @@ void update_funding_round(std::vector<Funding_round>& active_fr, sf::RenderWindo
 
 void spawn_enemies(std::vector<std::unique_ptr<Enemy>>& enemy_list, int amountStalkers, int amountRushers, int amountFlyers, int amountGiants, int amountKings, float window_x){
     
-    for(int i = 0; i < amountStalkers; ++i){
-        enemy_list.push_back(std::make_unique<Stalker>(random_num(0, window_x), random_num(0.01, 0.0001)));
+    for(int i = 0; i < amountStalkers/2; ++i){
+        enemy_list.push_back(std::make_unique<Stalker>(-400, random_num(0.01, 0.0001)));
+        enemy_list.push_back(std::make_unique<Stalker>(window_x+450, random_num(0.01, 0.0001)));
     };
-    for(int i = 0; i < amountRushers; ++i){
-        enemy_list.push_back(std::make_unique<Rusher>(random_num(0, window_x), random_num(0.01, 0.0001)));
+    for(int i = 0; i < amountRushers/2; ++i){
+        enemy_list.push_back(std::make_unique<Rusher>(-280, random_num(0.001, 0.0001)));
+        enemy_list.push_back(std::make_unique<Rusher>(window_x+280, random_num(0.001, 0.0001)));
+
     };
     for(int i = 0; i < amountFlyers; ++i){
-        enemy_list.push_back(std::make_unique<Flyer>(random_num(0, window_x), random_num(0.0009, 0.0001)));
+        enemy_list.push_back(std::make_unique<Flyer>(random_num(300, window_x-300), random_num(0.0001, 0.00001)));
+
     };
-    for(int i = 0; i < amountGiants; ++i){
-        enemy_list.push_back(std::make_unique<Giant>(random_num(0, window_x), random_num(0.0009, 0.0001)));
+    for(int i = 0; i < amountGiants/2; ++i){
+        enemy_list.push_back(std::make_unique<Giant>(random_num(-400, window_x), random_num(0.0009, 0.0001)));
+        enemy_list.push_back(std::make_unique<Giant>(random_num(window_x+450, window_x), random_num(0.0009, 0.0001)));
+
     };
     for(int i = 0; i < amountKings; ++i){
         enemy_list.push_back(std::make_unique<King>(random_num(0, window_x), random_num(0.0009, 0.0001)));
@@ -58,72 +63,3 @@ void spawn_enemies(std::vector<std::unique_ptr<Enemy>>& enemy_list, int amountSt
     
 }
 
-
-
-void change_level(int level, sf::Texture& bkg, std::unordered_map<std::string, std::string>& background_images, sf::Sprite& background, sf::RenderWindow& window){
-    sf::Clock level_delay_clock;
-    level_delay_clock.start();
-    while(level_delay_clock.getElapsedTime() < sf::seconds(2.f)){
-        //do something
-        background.setTexture(bkg);
-        window.draw(background);
-        
-        switch(level){
-            case 1 :
-                if(!bkg.loadFromFile(background_images.at("first_blood_bkg"))){
-                    std::cerr << "Unable to load menu screen" << std::endl;
-                }
-                break;
-            case 2 :
-                if(!bkg.loadFromFile(background_images.at("first_blood_bkg"))){
-                    std::cerr << "Unable to load menu screen" << std::endl;
-                }
-                break;
-            case 3 :
-                if(!bkg.loadFromFile(background_images.at("first_blood_bkg"))){
-                    std::cerr << "Unable to load menu screen" << std::endl;
-                }
-                break;
-            case 4 :
-                if(!bkg.loadFromFile(background_images.at("second_blood_bkg"))){
-                    std::cerr << "Unable to load menu screen" << std::endl;
-                }
-                break;
-            case 5 :
-                if(!bkg.loadFromFile(background_images.at("second_blood_bkg"))){
-                    std::cerr << "Unable to load menu screen" << std::endl;
-                }
-                break;
-            case 6 :
-                if(!bkg.loadFromFile(background_images.at("second_blood_bkg"))){
-                    std::cerr << "Unable to load menu screen" << std::endl;
-                }
-                break;
-            case 7 :
-                if(!bkg.loadFromFile(background_images.at("third_blood_bkg"))){
-                    std::cerr << "Unable to load menu screen" << std::endl;
-                }
-                break;
-            case 8 :
-                if(!bkg.loadFromFile(background_images.at("third_blood_bkg"))){
-                    std::cerr << "Unable to load menu screen" << std::endl;
-                }
-                break;
-            case 9 :
-                if(!bkg.loadFromFile(background_images.at("third_blood_bkg"))){
-                    std::cerr << "Unable to load menu screen" << std::endl;
-                }
-                break;
-            case 10 :
-                if(!bkg.loadFromFile(background_images.at("fourth_blood_bkg"))){
-                    std::cerr << "Unable to load menu screen" << std::endl;
-                }
-                break;
-            default :
-                break;
-            }
-     
-        }
-
-    level_delay_clock.reset();
-}

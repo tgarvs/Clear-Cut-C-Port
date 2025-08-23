@@ -20,8 +20,8 @@ void Entity::collision_control(Platform& plat)
     acceleration.y = 0;
     velocity.y = 0;
     
-    float bottomOfEntity = sprite->getPosition().y + sprite->getGlobalBounds().size.y/2; //sprite->getTextureRect().size.y/2;
-    float topOfPlatform = plat.location.y;
+    const float bottomOfEntity = sprite->getPosition().y + sprite->getGlobalBounds().size.y/2; //sprite->getTextureRect().size.y/2;
+    const float topOfPlatform = plat.location.y;
 
     if (bottomOfEntity > topOfPlatform) {
         // Snap entity to top of platform

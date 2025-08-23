@@ -34,7 +34,6 @@ public:
     int health;
     
     
-    
 private:
     float maxVel {0.5};
     int column {0};

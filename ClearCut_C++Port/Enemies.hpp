@@ -16,7 +16,6 @@
 class Enemy : public Entity
 {
 public:
-    
     Enemy(int h, std::string _texture) : health(h), Entity(_texture){
         red_clock.reset();
     }
@@ -27,11 +26,6 @@ public:
     int health;
     sf::Texture red_texture;
     sf::Clock red_clock;
-
-    
-private:
-    
-    
 };
 
 
@@ -43,10 +37,8 @@ public:
     void display (sf::RenderWindow& window) override;
     void move (const Character& player, sf::Vector2f& gravity) override;
 
-    
 private:
     float easing;
-    
 };
 
 
@@ -56,11 +48,9 @@ public:
     Rusher(const float rand_origin, const float _easing);
     void display (sf::RenderWindow& window) override;
     void move (const Character& player, sf::Vector2f& gravity) override;
-
     
 private:
     float easing;
-    
 };
 
 
@@ -73,11 +63,8 @@ public:
     void display (sf::RenderWindow& window) override;
     void move (const Character& player, sf::Vector2f& gravity) override;
 
-
-    
 private:
     float easing;
-
 };
 
 
@@ -89,11 +76,11 @@ public:
     void display (sf::RenderWindow& window) override;
     void move (const Character& player, sf::Vector2f& gravity) override;
 
-    
 private:
     float easing;
-    
 };
+
+
 
 
 class King : public Enemy
@@ -102,11 +89,9 @@ public:
     King(const float rand_origin, const float _easing);
     void display (sf::RenderWindow& window) override;
     void move (const Character& player, sf::Vector2f& gravity) override;
-
     
 private:
     float easing;
-    
 };
 
 #endif /* Enemies_hpp */

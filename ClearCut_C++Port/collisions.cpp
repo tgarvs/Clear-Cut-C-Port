@@ -44,9 +44,9 @@ template<typename T, typename P>
 std::string collision_detection(const T& entity_one, const P& entity_two)
 {
     float pos_x = entity_two.sprite->getGlobalBounds().position.x + (entity_two.sprite->getGlobalBounds().size.x * 0.3);
-    float pos_y = entity_two.sprite->getGlobalBounds().position.y + (entity_two.sprite->getGlobalBounds().size.y * 0.075);
+    float pos_y = entity_two.sprite->getGlobalBounds().position.y + (entity_two.sprite->getGlobalBounds().size.y * 0.09);
     float size_x = entity_two.sprite->getGlobalBounds().size.x * 0.4;
-    float size_y = entity_two.sprite->getGlobalBounds().size.y * 0.75;
+    float size_y = entity_two.sprite->getGlobalBounds().size.y * 0.9;
     
     
     
@@ -74,10 +74,10 @@ std::string collision_detection(const T& entity_one, const P& entity_two)
 
 
 
-void collision_check(Character& player_one, std::vector<std::unique_ptr<Platform>>& platform_list, std::vector<std::unique_ptr<Enemy>>& enemy_list, sf::Clock& health_delay_clock){
+void collision_check(Character& player_one, std::vector<std::unique_ptr<Platform>>& platform_list, std::vector<std::unique_ptr<Enemy>>& enemy_list, sf::Clock& health_delay_clock, int& fr_count){
     character_platform_collision(player_one, platform_list);
     enemy_platform_collision(enemy_list, platform_list);
-    character_enemy_collision(player_one, enemy_list, health_delay_clock);
+    character_enemy_collision(player_one, enemy_list, health_delay_clock, fr_count);
 };
 
 
@@ -106,11 +106,16 @@ void enemy_platform_collision(std::vector<std::unique_ptr<Enemy>>& enemy_list, s
 }
 
 
-void character_enemy_collision(Character& player_one, std::vector<std::unique_ptr<Enemy>>& enemy_list, sf::Clock& health_delay_clock){
+void character_enemy_collision(Character& player_one, std::vector<std::unique_ptr<Enemy>>& enemy_list, sf::Clock& health_delay_clock, int& fr_count){
     ;
     for (auto& enemy : enemy_list){
         if (collision_detection<Character, Enemy&> (player_one, *enemy) != "None" && player_one.canGetHit == true){
             player_one.health--;
+            fr_count = 0;
+            sf::Texture trees_felled_texture;
+            if(!trees_felled_texture.loadFromFile("./All_Assets/Other Assets/treesFelledWhite.png")){
+                std::cerr << "Unable to load texture" << std::endl;
+            }
             player_one.canGetHit = false;
             break;
         }
@@ -126,7 +131,7 @@ void character_enemy_collision(Character& player_one, std::vector<std::unique_pt
 }
 
 
-void bullet_enemy_collision(std::vector<Bullets>& active_bullets, std::vector<std::unique_ptr<Enemy>>& enemy_list, sf::Clock& shareholder_clock){
+void bullet_enemy_collision(std::vector<Bullets>& active_bullets, std::vector<std::unique_ptr<Enemy>>& enemy_list, sf::Clock& shareholder_clock, int& kill_count, int& fr_count){
     for(auto bulletIt = active_bullets.begin(); bulletIt != active_bullets.end();){
         bool bulletDeleted {false};
         for (auto enemyIt = enemy_list.begin(); enemyIt != enemy_list.end();) {
@@ -136,15 +141,17 @@ void bullet_enemy_collision(std::vector<Bullets>& active_bullets, std::vector<st
                     if(!(*enemyIt)->red_clock.isRunning()){
                         (*enemyIt)->red_clock.start();
                     }
+                    fr_count++;
                     active_bullets.erase(bulletIt);
                     bulletDeleted = true;
                     break;
                 }
                 else{
+                    kill_count++;
                     enemy_list.erase(enemyIt);
                     active_bullets.erase(bulletIt);
                     bulletDeleted = true;
-                    shareholder_clock.reset();
+                    shareholder_clock.restart();
                     break;
                 }
             }

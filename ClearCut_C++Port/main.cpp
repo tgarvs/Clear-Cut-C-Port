@@ -64,6 +64,11 @@ int main()
     
     sf::Clock shareholder_clock;
     sf::Clock health_delay_clock;
+    sf::Clock blood_clock;
+    blood_clock.reset();
+    
+    int kill_count {0};
+    int fr_count {0};
     int level {0};
     bool level_start {true};
     bool reset_flag {true};
@@ -100,7 +105,6 @@ int main()
     }
     sf::Sprite background (bkg);
     
-
     sf::Font font;
     if(!font.openFromFile("Fonts/AndaleMono.ttf")){
         std::cerr << "Unable to load menu screen" << std::endl;
@@ -155,26 +159,37 @@ int main()
         }
         
 //TURN BACK ON TO PLAY GAME
-//        else if(player_one.health == 0 || shareholder_clock.getElapsedTime() >= sf::seconds(30.f)){
-//            if(!bkg.loadFromFile(background_images.at("game_over_screen"))){
-//                std::cerr << "Unable to load game over screen" << std::endl;
-//            }
-//            window.draw(background);
-//            game_over();
-//        }
+        else if(player_one.health == 0 || shareholder_clock.getElapsedTime() >= sf::seconds(30.f)){
+            if(!bkg.loadFromFile(background_images.at("game_over_screen"))){
+                std::cerr << "Unable to load game over screen" << std::endl;
+            }
+            window.draw(background);
+            game_over();
+        }
+        
         
         else{
             window.draw(background);
-            play_game(player_one, enemy_list, platform_list, active_bullets, active_fr, window, level_start, level, gravity, bkg, background_images, shareholder_clock, health_delay_clock, gBulletTexture, funding_round_texture, background);
             
- 
-            std::string h = std::to_string(player_one.health);
-            sf::Text health_text(font, h);
-            health_text.setPosition({500, 10});
-            health_text.setCharacterSize(300);
-            health_text.setStyle(sf::Text::Bold);
-            health_text.setFillColor(sf::Color::Red);
-            window.draw(health_text);
+            display_hud(window,
+                        player_one,
+                        font,
+                        kill_count,
+                        level,
+                        shareholder_clock,
+                        fr_count,
+                        blood_clock
+                        );
+            
+            play_game(player_one, enemy_list, platform_list,
+                      active_bullets, active_fr, window,
+                      level_start, level,
+                      gravity, bkg, background_images,
+                      shareholder_clock, health_delay_clock,
+                      gBulletTexture, funding_round_texture,
+                      background, blood_clock,
+                      kill_count, fr_count);
+        
         }
         
         window.display();

@@ -23,6 +23,7 @@
 #include "utils.hpp"
 #include "updates.hpp"
 #include "menus.hpp"
+#include "Text_class.hpp"
 
 
 void reset(int& level, Character& player_one);
@@ -38,6 +39,17 @@ void play_game(Character& player_one, std::vector<std::unique_ptr<Enemy>>& enemy
                std::unordered_map<std::string, std::string>& background_images,
                sf::Clock& shareholder_clock, sf::Clock& health_delay_clock,
                sf::Texture& gBulletTexture, sf::Texture& funding_round_texture,
-               sf::Sprite& background);
+               sf::Sprite& background,
+               sf::Clock& blood_clock,
+               int& kill_count, int& fr_count);
+
+void display_hud(sf::RenderWindow& window,
+                 Character& player_one,
+                 sf::Font font,
+                 const int& kill_count,
+                 const int& level,
+                 sf::Clock& share_holder,
+                 const int& fr_count,
+                 sf::Clock& blood_clock);
 
 #endif /* menus_hpp */

@@ -27,13 +27,13 @@ void character_platform_collision(Character& player_one, std::vector<std::unique
 
 void enemy_platform_collision(std::vector<std::unique_ptr<Enemy>>& enemy_list, std::vector<std::unique_ptr<Platform>>& platform_list);
 
-void character_enemy_collision(Character& player_one, std::vector<std::unique_ptr<Enemy>>& enemy_list, sf::Clock& health_delay_clock);
+void character_enemy_collision(Character& player_one, std::vector<std::unique_ptr<Enemy>>& enemy_list, sf::Clock& health_delay_clock, int& fr_count);
 
-void collision_check(Character& player_one, std::vector<std::unique_ptr<Platform>>& platform_list,std::vector<std::unique_ptr<Enemy>>& enemy_list, sf::Clock& health_delay_clock);
+void collision_check(Character& player_one, std::vector<std::unique_ptr<Platform>>& platform_list,std::vector<std::unique_ptr<Enemy>>& enemy_list, sf::Clock& health_delay_clock, int& fr_count);
 
 void funding_round_enemy_collision(std::vector<Funding_round>& active_fr, std::vector<std::unique_ptr<Enemy>>& enemy_list, sf::Clock& shareholder_clock);
 
-void bullet_enemy_collision(std::vector<Bullets>& active_bullets, std::vector<std::unique_ptr<Enemy>>& enemy_list, sf::Clock& shareholder_clock);
+void bullet_enemy_collision(std::vector<Bullets>& active_bullets, std::vector<std::unique_ptr<Enemy>>& enemy_list, sf::Clock& shareholder_clock, int& kill_count, int& fr_count);
 
 
 #endif /* collisions_hpp */
