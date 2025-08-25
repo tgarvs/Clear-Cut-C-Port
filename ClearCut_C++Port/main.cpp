@@ -29,16 +29,15 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <limits>
 #include "Character.hpp"
 #include "Platforms.hpp"
 #include "Weapons.hpp"
 #include  "Enemies.hpp"
-#include <random>
 #include "collisions.hpp"
 #include "utils.hpp"
 #include "updates.hpp"
 #include "menus.hpp"
+#include "Fireflies.hpp"
 
 
 
@@ -57,7 +56,52 @@ int main()
     platform_list.push_back(std::make_unique<Platform>(-1000, window.getSize().y, window.getSize().x+2000, 5000));
     platform_list.push_back(std::make_unique<Platform>(0, window.getSize().y/2, 400, 60));
     platform_list.push_back(std::make_unique<Platform>(window.getSize().x-400, window.getSize().y/2, 400, 60));
-
+    
+    
+    std::vector<Fireflies> fireflies;
+    for(int i = 0; i < 100; ++i){
+        fireflies.push_back(Fireflies(random_num(1.f, 6.f),
+                                      random_num(0.f, float(window.getSize().x)),
+                                      random_num(0.f, float(window.getSize().y)),
+                                      sf::Color(std::uint8_t(156), std::uint8_t(49), std::uint8_t(255)),
+                                      window.getSize().x,
+                                      random_num(0.05, 0.3),
+                                      random_num(0.2, 2)));
+    }
+    
+    std::vector<Fireflies> fireflies_yellow;
+    for(int i = 0; i < 60; ++i){
+        fireflies_yellow.push_back(Fireflies(random_num(1.f, 6.f),
+                                      random_num(0.f, float(window.getSize().x)),
+                                      random_num(0.f, float(window.getSize().y)),
+                                      sf::Color(std::uint8_t(255), std::uint8_t(244), std::uint8_t(78)),
+                                      window.getSize().x,
+                                      random_num(0.05, 0.3),
+                                      random_num(0.2, 2)));
+    }
+    
+//    CustomAudio jumper ("./All_Assets/Sound Effects/Score & Edited/jumpSound.mp3");
+//    std::vector<std::unique_ptr<CustomAudio>> soundBites;
+//    soundBites.push_back(std::make_unique<CustomAudio>("./All_Assets/Sound Effects/Score & Edited/jumpSound.mp3"));
+    
+    std::unordered_map<std::string, std::unique_ptr<CustomAudio>> soundBites;
+    soundBites.emplace("jump", std::make_unique<CustomAudio>("./All_Assets/Sound Effects/Score & Edited/jumpSound.mp3"));
+    soundBites.emplace("shoot", std::make_unique<CustomAudio>("./All_Assets/Sound Effects/Score & Edited/Pew5.mp3"));
+    soundBites.emplace("funding round", std::make_unique<CustomAudio>("./All_Assets/Sound Effects/Score & Edited/special.mp3"));
+    soundBites.emplace("grunt", std::make_unique<CustomAudio>("./All_Assets/Sound Effects/Score & Edited/gruntSound.mp3"));
+    soundBites.emplace("level change", std::make_unique<CustomAudio>("./All_Assets/Sound Effects/Score & Edited/levelChange.mp3"));
+    
+    
+    
+    std::unordered_map<std::string, std::unique_ptr<CustomMusic>> themeMusic;
+    themeMusic.emplace("menu", std::make_unique<CustomMusic>("./All_Assets/Sound Effects/Score & Edited/menuTheme.mp3"));
+    themeMusic.emplace("one", std::make_unique<CustomMusic>("./All_Assets/Sound Effects/Score & Edited/themeOne.mp3"));
+    themeMusic.emplace("two", std::make_unique<CustomMusic>("./All_Assets/Sound Effects/Score & Edited/themeTwo.mp3"));
+    themeMusic.emplace("three", std::make_unique<CustomMusic>("./All_Assets/Sound Effects/Score & Edited/themeThree.mp3"));
+    themeMusic.emplace("boss", std::make_unique<CustomMusic>("./All_Assets/Sound Effects/Score & Edited/bossTheme.mp3"));
+    themeMusic.emplace("final", std::make_unique<CustomMusic>("./All_Assets/Sound Effects/Score & Edited/finalTheme.mp3"));
+    themeMusic.emplace("gameover", std::make_unique<CustomMusic>("./All_Assets/Sound Effects/Score & Edited/gameoverTheme.mp3"));
+    
     std::vector<Bullets> active_bullets;
     std::vector<Funding_round> active_fr;
     std::vector<std::unique_ptr<Enemy>> enemy_list{};
@@ -83,7 +127,6 @@ int main()
     if(!funding_round_texture.loadFromFile("./All_Assets/Sprites/fundingRound.png")){
         std::cerr << "Unable to load character sprite" << std::endl;
     }
-
 
     std::unordered_map<std::string, std::string> background_images{
         {"menu_screen", "./All_Assets/Backgrounds/menuscreen.png"},
@@ -143,28 +186,44 @@ int main()
     
         //Check to see if the game has been reset or started
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::P) && reset_flag == true){
-            reset(level, player_one);
+            reset(level, player_one, level_start, enemy_list);
             reset_flag = false;
         }
         
-       
         
-        
+
         if(level == 0){
             if(!bkg.loadFromFile(background_images.at("menu_screen"))){
                 std::cerr << "Unable to load menu screen" << std::endl;
             }
+            background.setScale({1,1});
+            background.setPosition({0,0});
             window.draw(background);
-            main_menu();
+            
+            for(auto& flies : fireflies){
+                flies.move_and_display();
+                window.draw(flies.fly);
+            }
+            
+            set_music("menu", themeMusic);
         }
         
-//TURN BACK ON TO PLAY GAME
         else if(player_one.health == 0 || shareholder_clock.getElapsedTime() >= sf::seconds(30.f)){
             if(!bkg.loadFromFile(background_images.at("game_over_screen"))){
                 std::cerr << "Unable to load game over screen" << std::endl;
             }
+            background.setScale({1.1, 1.1});
+            background.setPosition({-100, -150});
             window.draw(background);
-            game_over();
+            
+            for(auto& flies_yellow : fireflies_yellow){
+                flies_yellow.move_and_display();
+                window.draw(flies_yellow.fly);
+            }
+            
+            set_music("gameover", themeMusic);
+
+
         }
         
         
@@ -188,9 +247,29 @@ int main()
                       shareholder_clock, health_delay_clock,
                       gBulletTexture, funding_round_texture,
                       background, blood_clock,
-                      kill_count, fr_count);
-        
+                      kill_count, fr_count,
+                      soundBites);
+            
+            
+            if(level >= 1 && level < 3){
+                set_music("one", themeMusic);
+            }
+            else if(level >= 3 && level < 6){
+                set_music("two", themeMusic);
+            }
+            else if(level >= 6 && level < 9){
+                set_music("three", themeMusic);
+            }
+            else if(level == 9){
+                set_music("boss", themeMusic);
+            }
+            else if(level == 10){
+                set_music("final", themeMusic);
+            }
+            
         }
+        
+
         
         window.display();
     }

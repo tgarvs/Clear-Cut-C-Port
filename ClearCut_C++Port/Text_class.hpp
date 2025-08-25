@@ -22,8 +22,8 @@ public:
         text.setCharacterSize(text_size);
         text.setStyle(sf::Text::Bold);
         text.setFillColor(sf::Color::White);
-        text.setOutlineColor(sf::Color::Black);
-        text.setOutlineThickness(2.f);
+//        text.setOutlineColor(sf::Color::Black);
+//        text.setOutlineThickness(2.f);
     }
     
     sf::Text text;

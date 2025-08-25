@@ -38,7 +38,6 @@ void Character::display (sf::RenderWindow& window)
         velocity.y = 25;
     }
     
-    
     //Check Bounds
     if((sprite->getPosition().x) >= window.getSize().x || (sprite->getPosition().x) <= 0){
         velocity.x *= -1;

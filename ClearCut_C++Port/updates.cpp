@@ -44,12 +44,14 @@ void spawn_enemies(std::vector<std::unique_ptr<Enemy>>& enemy_list, int amountSt
         enemy_list.push_back(std::make_unique<Stalker>(window_x+450, random_num(0.01, 0.0001)));
     };
     for(int i = 0; i < amountRushers/2; ++i){
-        enemy_list.push_back(std::make_unique<Rusher>(-280, random_num(0.001, 0.0001)));
-        enemy_list.push_back(std::make_unique<Rusher>(window_x+280, random_num(0.001, 0.0001)));
+//        enemy_list.push_back(std::make_unique<Rusher>(-280, random_num(0.001, 0.0001)));
+//        enemy_list.push_back(std::make_unique<Rusher>(window_x+280, random_num(0.001, 0.0001)));
+        enemy_list.push_back(std::make_unique<Rusher>(0, random_num(0.001, 0.0001)));
+        enemy_list.push_back(std::make_unique<Rusher>(window_x, random_num(0.001, 0.0001)));
 
     };
     for(int i = 0; i < amountFlyers; ++i){
-        enemy_list.push_back(std::make_unique<Flyer>(random_num(300, window_x-300), random_num(0.0001, 0.00001)));
+        enemy_list.push_back(std::make_unique<Flyer>(random_num(300, window_x-300), random_num(0.001, 0.0001)));
 
     };
     for(int i = 0; i < amountGiants/2; ++i){

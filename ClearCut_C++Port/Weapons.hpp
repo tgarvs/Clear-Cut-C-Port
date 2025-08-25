@@ -23,7 +23,6 @@ public:
         sprite->setOrigin({origin_x, origin_y});
         
         starting_x = origin.x;
-
     }
     
     void display(sf::RenderWindow& window);

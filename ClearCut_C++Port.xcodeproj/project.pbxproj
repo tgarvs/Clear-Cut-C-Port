@@ -59,6 +59,7 @@
 		C761DE252E4E45510084A093 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		C77BC19E2E59DAF10042D9A5 /* Text_class.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Text_class.cpp; sourceTree = "<group>"; };
 		C77BC19F2E59DAF10042D9A5 /* Text_class.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Text_class.hpp; sourceTree = "<group>"; };
+		C77BC1A22E5A4C920042D9A5 /* Fireflies.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Fireflies.hpp; sourceTree = "<group>"; };
 		C79E8CFC2E23D58300D921F6 /* ClearCut_C++Port */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "ClearCut_C++Port"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C79E8CFF2E23D58300D921F6 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		C79E8D072E23D6D200D921F6 /* libsfml-window.3.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libsfml-window.3.0.0.dylib"; path = "ExternalLibraries/SFML/lib/libsfml-window.3.0.0.dylib"; sourceTree = "<group>"; };
@@ -123,10 +124,11 @@
 				C761DA8D2E36A9AA0084A093 /* menus.hpp */,
 				C77BC19E2E59DAF10042D9A5 /* Text_class.cpp */,
 				C77BC19F2E59DAF10042D9A5 /* Text_class.hpp */,
-				C761DA832E36A5710084A093 /* collisions.cpp */,
 				C761DA862E36A6E00084A093 /* updates.cpp */,
 				C761DA872E36A6E00084A093 /* updates.hpp */,
+				C761DA832E36A5710084A093 /* collisions.cpp */,
 				C761DA842E36A5710084A093 /* collisions.hpp */,
+				C77BC1A22E5A4C920042D9A5 /* Fireflies.hpp */,
 				C761DE252E4E45510084A093 /* README.md */,
 				C7518D1E2E2A366900110166 /* Weapons.hpp */,
 				C7518D1A2E255FDC00110166 /* Platforms.cpp */,

@@ -19,7 +19,7 @@ public:
     Enemy(int h, std::string _texture) : health(h), Entity(_texture){
         red_clock.reset();
     }
-    ~Enemy() {std::cout<< "Enemy Destructor has been called" << std::endl;}
+    virtual ~Enemy(){}
     virtual void move (const Character& player, sf::Vector2f& gravity) = 0;
     void hit_animation();
     

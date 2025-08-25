@@ -45,9 +45,6 @@ private:
     sf::Clock delay_clock;
 
     
-
-    
-    
     
 };
 

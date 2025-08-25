@@ -7,16 +7,17 @@
 
 #include "menus.hpp"
 
-void reset(int& level, Character& player_one){
+void reset(int& level, Character& player_one, bool& level_start, std::vector<std::unique_ptr<Enemy>>& enemy_list){
     if(level == 0){
         level = 1;
     }
     else if (level != 0){
         level = 0;
     }
+    level_start = true;
     player_one.health = 3;
+    enemy_list.clear();
 }
-
 
 
 
@@ -30,9 +31,7 @@ void game_over(){
 
 
 
-
-
-void play_game(Character& player_one, std::vector<std::unique_ptr<Enemy>>& enemy_list, std::vector<std::unique_ptr<Platform>>& platform_list,  std::vector<Bullets>& active_bullets, std::vector<Funding_round>& active_fr, sf::RenderWindow& window, bool& level_start, int& level, sf::Vector2f& gravity, sf::Texture& bkg, std::unordered_map<std::string, std::string>& background_images, sf::Clock& shareholder_clock, sf::Clock& health_delay_clock, sf::Texture& gBulletTexture, sf::Texture& funding_round_texture, sf::Sprite& background, sf::Clock& blood_clock, int& kill_count, int& fr_count){
+void play_game(Character& player_one, std::vector<std::unique_ptr<Enemy>>& enemy_list, std::vector<std::unique_ptr<Platform>>& platform_list,  std::vector<Bullets>& active_bullets, std::vector<Funding_round>& active_fr, sf::RenderWindow& window, bool& level_start, int& level, sf::Vector2f& gravity, sf::Texture& bkg, std::unordered_map<std::string, std::string>& background_images, sf::Clock& shareholder_clock, sf::Clock& health_delay_clock, sf::Texture& gBulletTexture, sf::Texture& funding_round_texture, sf::Sprite& background, sf::Clock& blood_clock, int& kill_count, int& fr_count, std::unordered_map<std::string, std::unique_ptr<CustomAudio>>& soundBites){
 
     //drawing platforms
     for (int i = 0; i < platform_list.size(); ++i){
@@ -53,70 +52,70 @@ void play_game(Character& player_one, std::vector<std::unique_ptr<Enemy>>& enemy
                 if(!bkg.loadFromFile(background_images.at("first_bkg"))){
                     std::cerr << "Unable to load menu screen" << std::endl;
                 }
-                spawn_enemies(enemy_list, 0, 0, 0, 2, 0, float(window.getSize().x));
+                spawn_enemies(enemy_list, 2, 0, 0, 0, 0, float(window.getSize().x));
                 level_start = false;
                 break;
             case 2 :
                 if(!bkg.loadFromFile(background_images.at("first_bkg"))){
                     std::cerr << "Unable to load menu screen" << std::endl;
                 }
-                spawn_enemies(enemy_list, 0, 2, 0, 0, 0, float(window.getSize().x));
+                spawn_enemies(enemy_list, 2, 2, 0, 0, 0, float(window.getSize().x));
                 level_start = false;
                 break;
             case 3 :
-                if(!bkg.loadFromFile(background_images.at("first_bkg"))){
+                if(!bkg.loadFromFile(background_images.at("second_bkg"))){
                     std::cerr << "Unable to load menu screen" << std::endl;
                 }
-                spawn_enemies(enemy_list, 0, 0, 10, 0, 0, float(window.getSize().x));
+                spawn_enemies(enemy_list, 0, 2, 5, 0, 0, float(window.getSize().x));
                 level_start = false;
                 break;
             case 4 :
                 if(!bkg.loadFromFile(background_images.at("second_bkg"))){
                     std::cerr << "Unable to load menu screen" << std::endl;
                 }
-                spawn_enemies(enemy_list, 0, 0, 0, 2, 0, float(window.getSize().x));
+                spawn_enemies(enemy_list, 0, 0, 50, 0, 0, float(window.getSize().x));
                 level_start = false;
                 break;
             case 5 :
                 if(!bkg.loadFromFile(background_images.at("second_bkg"))){
                     std::cerr << "Unable to load menu screen" << std::endl;
                 }
-                spawn_enemies(enemy_list, 0, 0, 0, 0, 2, float(window.getSize().x));
+                spawn_enemies(enemy_list, 2, 0, 0, 0, 0, float(window.getSize().x));
                 level_start = false;
                 break;
             case 6 :
-                if(!bkg.loadFromFile(background_images.at("second_bkg"))){
+                if(!bkg.loadFromFile(background_images.at("third_bkg"))){
                     std::cerr << "Unable to load menu screen" << std::endl;
                 }
-                spawn_enemies(enemy_list, 1, 0, 0, 0, 0, float(window.getSize().x));
+                spawn_enemies(enemy_list, 2, 0, 0, 0, 0, float(window.getSize().x));
                 level_start = false;
                 break;
             case 7 :
                 if(!bkg.loadFromFile(background_images.at("third_bkg"))){
                     std::cerr << "Unable to load menu screen" << std::endl;
                 }
-                spawn_enemies(enemy_list, 1, 0, 0, 0, 0, float(window.getSize().x));
+                spawn_enemies(enemy_list, 2, 0, 0, 0, 0, float(window.getSize().x));
                 level_start = false;
                 break;
             case 8 :
                 if(!bkg.loadFromFile(background_images.at("third_bkg"))){
                     std::cerr << "Unable to load menu screen" << std::endl;
                 }
-                spawn_enemies(enemy_list, 1, 0, 0, 0, 0, float(window.getSize().x));
+                spawn_enemies(enemy_list, 2, 0, 0, 0, 0, float(window.getSize().x));
                 level_start = false;
                 break;
             case 9 :
-                if(!bkg.loadFromFile(background_images.at("third_bkg"))){
+                if(!bkg.loadFromFile(background_images.at("fourth_bkg"))){
                     std::cerr << "Unable to load menu screen" << std::endl;
                 }
-                spawn_enemies(enemy_list, 1, 0, 0, 0, 0, float(window.getSize().x));
+                spawn_enemies(enemy_list, 2, 0, 0, 0, 0, float(window.getSize().x));
                 level_start = false;
                 break;
             case 10 :
                 if(!bkg.loadFromFile(background_images.at("fourth_bkg"))){
                     std::cerr << "Unable to load menu screen" << std::endl;
                 }
-                spawn_enemies(enemy_list, 1, 0, 0, 0, 0, float(window.getSize().x));
+                spawn_enemies(enemy_list, 0, 0, 0, 0, 0, float(window.getSize().x));
                 level_start = false;
                 break;
             default :
@@ -134,9 +133,10 @@ void play_game(Character& player_one, std::vector<std::unique_ptr<Enemy>>& enemy
     }
     
     //Next Level Protocol
-    else if (enemy_list.empty() && !level_start){
+    else if (enemy_list.empty() && !level_start && level != 10){
         if(!blood_clock.isRunning()){
             blood_clock.start();
+            soundBites.at("level change")->play();
         }
         shareholder_clock.stop();
     }
@@ -155,7 +155,7 @@ void play_game(Character& player_one, std::vector<std::unique_ptr<Enemy>>& enemy
                 }
                 break;
             case 3 :
-                if(!bkg.loadFromFile(background_images.at("first_blood_bkg"))){
+                if(!bkg.loadFromFile(background_images.at("second_blood_bkg"))){
                     std::cerr << "Unable to load first_blood_bkg" << std::endl;
                 }
                 break;
@@ -170,7 +170,7 @@ void play_game(Character& player_one, std::vector<std::unique_ptr<Enemy>>& enemy
                 }
                 break;
             case 6 :
-                if(!bkg.loadFromFile(background_images.at("second_blood_bkg"))){
+                if(!bkg.loadFromFile(background_images.at("third_blood_bkg"))){
                     std::cerr << "Unable to load second_blood_bkg" << std::endl;
                 }
                 break;
@@ -185,15 +185,15 @@ void play_game(Character& player_one, std::vector<std::unique_ptr<Enemy>>& enemy
                 }
                 break;
             case 9 :
-                if(!bkg.loadFromFile(background_images.at("third_blood_bkg"))){
+                if(!bkg.loadFromFile(background_images.at("fourth_blood_bkg"))){
                     std::cerr << "Unable to load third_blood_bkg" << std::endl;
                 }
                 break;
-            case 10 :
-                if(!bkg.loadFromFile(background_images.at("fourth_blood_bkg"))){
-                    std::cerr << "Unable to load fourth_blood_bkg" << std::endl;
-                }
-                break;
+//            case 10 :
+//                if(!bkg.loadFromFile(background_images.at("fourth_blood_bkg"))){
+//                    std::cerr << "Unable to load fourth_blood_bkg" << std::endl;
+//                }
+//                break;
             default :
                 break;
             }
@@ -209,35 +209,38 @@ void play_game(Character& player_one, std::vector<std::unique_ptr<Enemy>>& enemy
 
     
     //platform collision detection
-    collision_check(player_one, platform_list, enemy_list, health_delay_clock, fr_count);
+    collision_check(player_one, platform_list, enemy_list, health_delay_clock, fr_count, soundBites);
 
     
     //draw bullets
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::L) && player_one.canShoot){
-        active_bullets.push_back(Bullets({player_one.location.x, player_one.location.y}, player_one.isLeft, gBulletTexture));
+        active_bullets.push_back(Bullets({player_one.location.x, (player_one.location.y+15)}, player_one.isLeft, gBulletTexture));
         player_one.canShoot = false;
+        soundBites.at("shoot")->play();
     }
     //updating bullets
     if(!active_bullets.empty()){
-    update_bullets(active_bullets, window);
+        update_bullets(active_bullets, window);
     }
     //Bullet/Enemy collision detection
     if(!active_bullets.empty() && !enemy_list.empty()){
-    bullet_enemy_collision(active_bullets, enemy_list, shareholder_clock, kill_count, fr_count);
+        bullet_enemy_collision(active_bullets, enemy_list, shareholder_clock, kill_count, fr_count);
     }
 
     
     //Funding Rounds
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::K) && fr_count >= 10){
-    active_fr.push_back(Funding_round(player_one.location, funding_round_texture));
+        active_fr.push_back(Funding_round(player_one.location, funding_round_texture));
+        fr_count = 0;
+        soundBites.at("funding round")->play();
     }
     //Updating funding rounds
     if(!active_fr.empty()){
-    update_funding_round(active_fr, window);
+        update_funding_round(active_fr, window);
     }
     //Funding round + Enemy collision
     if(!active_fr.empty() && !enemy_list.empty()){
-    funding_round_enemy_collision(active_fr, enemy_list, shareholder_clock);
+        funding_round_enemy_collision(active_fr, enemy_list, shareholder_clock);
     }
 
 }
@@ -256,7 +259,7 @@ void display_hud(sf::RenderWindow& window, Character& player_one, sf::Font font,
     window.draw(kill_text.text);
     
     std::string levels {std::to_string(level)};
-    CustomText level_text (textSize, 325.f, 103.f, font, levels);
+    CustomText level_text (textSize, 325.f, 83.f, font, levels);
     window.draw(level_text.text);
         
     
@@ -264,18 +267,23 @@ void display_hud(sf::RenderWindow& window, Character& player_one, sf::Font font,
     float window_length {float(window.getSize().x)};
     float rect_pos_x {window_length/2.f - 300.f};
     sf::Vector2f rect_pos {rect_pos_x, 50.f};
-    
     float sh_bar_width (30 - share_holder.getElapsedTime().asSeconds());
     sh_bar_width *= 20.f;
     sf::Vector2f rect_size {sh_bar_width, 30.f};
-    
     sh_bar.setSize(rect_size);
     sh_bar.setPosition(rect_pos);
-    sh_bar.setFillColor(sf::Color(std::uint8_t(185), std::uint8_t(2), std::uint8_t(247)));
-    sh_bar.setOutlineColor(sf::Color::Black);
-    sh_bar.setOutlineThickness(2.f);
+    sh_bar.setFillColor(sf::Color(std::uint8_t(156), std::uint8_t(49), std::uint8_t(255)));
     window.draw(sh_bar);
     
+    sf::RectangleShape fr_bar;
+    sf::Vector2f fr_bar_pos {rect_pos_x, 80.f};
+    float fr_bar_w {fr_count*60.f};
+    sf::Vector2f fr_bar_size ({fr_bar_w, 30});
+    fr_bar.setSize(fr_bar_size);
+    fr_bar.setPosition(fr_bar_pos);
+    fr_bar.setFillColor(sf::Color(std::uint8_t(0), std::uint8_t(230), std::uint8_t(252)));
+    window.draw(fr_bar);
+
     
     std::vector<sf::CircleShape> health_spheres (3);
     auto grey {sf::Color(80, 80, 80)};
@@ -311,8 +319,8 @@ void display_hud(sf::RenderWindow& window, Character& player_one, sf::Font font,
         starting_x -= 55;
         
         sphere.setRadius(25);
-        sphere.setOutlineColor(sf::Color::Black);
-        sphere.setOutlineThickness(2.f);
+//        sphere.setOutlineColor(sf::Color::Black);
+//        sphere.setOutlineThickness(2.f);
         window.draw(sphere);
     }
     
@@ -330,7 +338,7 @@ void display_hud(sf::RenderWindow& window, Character& player_one, sf::Font font,
         std::cerr << "Unable to load texture" << std::endl;
     }
     sf::Sprite level_sprite {level_texture};
-    level_sprite.setPosition({50.f, 100.f});
+    level_sprite.setPosition({50.f, 80.f});
     window.draw(level_sprite);
     
     
@@ -351,7 +359,7 @@ void display_hud(sf::RenderWindow& window, Character& player_one, sf::Font font,
             std::cerr << "Unable to load texture" << std::endl;
         }
         sf::Sprite fr_sprite {fr_texture};
-        fr_sprite.setPosition({50.f, 153.f});
+        fr_sprite.setPosition({53.f, 123.f});
         window.draw(fr_sprite);
     }
     
@@ -361,7 +369,7 @@ void display_hud(sf::RenderWindow& window, Character& player_one, sf::Font font,
             std::cerr << "Unable to load texture" << std::endl;
         }
         sf::Sprite fr1_sprite {fr1_texture};
-        fr1_sprite.setPosition({float(window.getSize().x)/2.f - 300.f, 80.f});
+        fr1_sprite.setPosition({float(window.getSize().x)/2.f - 303.f, 110.f});
         window.draw(fr1_sprite);
     }
     
@@ -371,7 +379,7 @@ void display_hud(sf::RenderWindow& window, Character& player_one, sf::Font font,
             std::cerr << "Unable to load texture" << std::endl;
         }
         sf::Sprite fr1_sprite {fr1_texture};
-        fr1_sprite.setPosition({float(window.getSize().x)/2.f - 300.f, 80.f});
+        fr1_sprite.setPosition({float(window.getSize().x)/2.f - 303.f, 110.f});
         window.draw(fr1_sprite);
     }
     
@@ -381,7 +389,7 @@ void display_hud(sf::RenderWindow& window, Character& player_one, sf::Font font,
             std::cerr << "Unable to load texture" << std::endl;
         }
         sf::Sprite fr1_sprite {fr1_texture};
-        fr1_sprite.setPosition({float(window.getSize().x)/2.f - 300.f, 80.f});
+        fr1_sprite.setPosition({float(window.getSize().x)/2.f - 303.f, 110.f});
         window.draw(fr1_sprite);
     }
     
@@ -393,7 +401,6 @@ void display_hud(sf::RenderWindow& window, Character& player_one, sf::Font font,
             std::cerr << "Unable to load texture" << std::endl;
         }
         sf::Sprite blood_sprite {blood_texture};
-//        blood_sprite.scale({3, 3});
         blood_sprite.setPosition({float(window.getSize().x)/2.f - 400.f, float(window.getSize().y)/2.f - 200});
         window.draw(blood_sprite);
     }

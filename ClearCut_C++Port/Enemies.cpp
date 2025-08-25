@@ -61,12 +61,6 @@ void Stalker::display (sf::RenderWindow& window)
     
     
     window.draw(*sprite);
-//    sf::RectangleShape outline (sprite->getGlobalBounds().size);
-//    outline.setPosition(sprite->getGlobalBounds().position);
-//    outline.setOutlineColor(sf::Color::White);
-//    outline.setOutlineThickness(5);
-//    outline.setFillColor(sf::Color::Transparent);
-//    window.draw(outline);
 }
 
 
@@ -89,7 +83,7 @@ void Stalker::move (const Character& player, sf::Vector2f& gravity){
 
 
 //RUSHER CLASS METHODS
-Rusher::Rusher(const float rand_origin, const float _easing): Enemy(10, "./All_Assets/Sprites/rusherSprite.png"), easing(_easing) {
+Rusher::Rusher(const float rand_origin, const float _easing): Enemy(4, "./All_Assets/Sprites/rusherSprite.png"), easing(_easing) {
     //Set intial movement conditions for rect
     
     
@@ -111,24 +105,29 @@ Rusher::Rusher(const float rand_origin, const float _easing): Enemy(10, "./All_A
 
 void Rusher::display (sf::RenderWindow& window)
 {
-    if(velocity.x <= 10){
+    if(std::abs(velocity.x) <= 7){
         velocity += acceleration;
     }
     else{
-        velocity.x = 11;
+        if(velocity.x > 0){
+            velocity.x = 8;
+        }
+        if(velocity.x < 0){
+            velocity.x = -8;
+        }
     }
     location += velocity;
     sprite->setPosition(location);
     
-    
     //Check Bounds
     if(sprite->getPosition().x >= window.getSize().x + 300){
-        velocity = {0,0};
-//        location.x = (window.getSize().x+500) - sprite->getGlobalBounds().size.x/2;
+        velocity.x *= -1;
+        location.x = window.getSize().x + 300;
     }
+    
     if(sprite->getPosition().x <= -300){
-        velocity = {0,0};
-//        location.x = -500 + sprite->getGlobalBounds().size.x/2;
+        velocity.x *= -1;
+        location.x = -300;
     }
     
     //Red Hit Texture
@@ -164,7 +163,7 @@ void Rusher::move (const Character& player, sf::Vector2f& gravity){
 
 
 //Flyer CLASS METHODS
-Flyer::Flyer(const float rand_origin, const float _easing): Enemy(5, "./All_Assets/Sprites/flyingSprite.png"), easing(_easing) {
+Flyer::Flyer(const float rand_origin, const float _easing): Enemy(2, "./All_Assets/Sprites/flyingSprite.png"), easing(_easing) {
     //Set intial movement conditions for rect
     location = {rand_origin, -200};
     std::cout<<rand_origin<<std::endl;
@@ -227,7 +226,7 @@ void Flyer::move (const Character& player, sf::Vector2f& gravity){
 
 
 //Giants
-Giant::Giant(const float rand_origin, const float _easing): Enemy(5, "./All_Assets/Sprites/giantSprite.png"), easing(_easing) {
+Giant::Giant(const float rand_origin, const float _easing): Enemy(20, "./All_Assets/Sprites/giantSprite.png"), easing(_easing) {
     //Set intial movement conditions for rect
     location = {rand_origin, 100};
     velocity = {0, 0};
@@ -272,12 +271,6 @@ void Giant::display (sf::RenderWindow& window)
     }
     
     window.draw(*sprite);
-//    sf::RectangleShape outline (sprite->getGlobalBounds().size);
-//    outline.setPosition(sprite->getGlobalBounds().position);
-//    outline.setOutlineColor(sf::Color::White);
-//    outline.setOutlineThickness(5);
-//    outline.setFillColor(sf::Color::Transparent);
-//    window.draw(outline);
 }
 
 
@@ -300,7 +293,7 @@ void Giant::move (const Character& player, sf::Vector2f& gravity){
 
 
 //Kings CLASS METHODS
-King::King(const float rand_origin, const float _easing): Enemy(5, "./All_Assets/Sprites/bossSprite.png"), easing(_easing) {
+King::King(const float rand_origin, const float _easing): Enemy(50, "./All_Assets/Sprites/bossSprite.png"), easing(_easing) {
     //Set intial movement conditions for rect
     location = {rand_origin, 100};
     velocity = {0, 0};
@@ -326,13 +319,14 @@ void King::display (sf::RenderWindow& window)
     
     
     //Check Bounds
-    if((sprite->getPosition().x + sprite->getGlobalBounds().size.x/2) >= window.getSize().x){
-        velocity = {0,0};
-        location.x = window.getSize().x - sprite->getGlobalBounds().size.x/2;
+    if(sprite->getPosition().x >= window.getSize().x + 300){
+        velocity.x *= -1;
+        location.x = window.getSize().x + 300;
     }
-    if((sprite->getPosition().x - sprite->getGlobalBounds().size.x/2) <= 0){
-        velocity = {0,0};
-        location.x = sprite->getGlobalBounds().size.x/2;
+    
+    if(sprite->getPosition().x <= -300){
+        velocity.x *= -1;
+        location.x = -300;
     }
     
     //Red Hit Texture
@@ -345,12 +339,6 @@ void King::display (sf::RenderWindow& window)
     }
     
     window.draw(*sprite);
-//    sf::RectangleShape outline (sprite->getGlobalBounds().size);
-//    outline.setPosition(sprite->getGlobalBounds().position);
-//    outline.setOutlineColor(sf::Color::White);
-//    outline.setOutlineThickness(5);
-//    outline.setFillColor(sf::Color::Transparent);
-//    window.draw(outline);
 }
 
 

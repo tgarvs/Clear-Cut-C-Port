@@ -26,7 +26,7 @@
 #include "Text_class.hpp"
 
 
-void reset(int& level, Character& player_one);
+void reset(int& level, Character& player_one, bool& level_start, std::vector<std::unique_ptr<Enemy>>& enemy_list);
 void main_menu();
 void game_over();
 void play_game(Character& player_one, std::vector<std::unique_ptr<Enemy>>& enemy_list,
@@ -41,7 +41,8 @@ void play_game(Character& player_one, std::vector<std::unique_ptr<Enemy>>& enemy
                sf::Texture& gBulletTexture, sf::Texture& funding_round_texture,
                sf::Sprite& background,
                sf::Clock& blood_clock,
-               int& kill_count, int& fr_count);
+               int& kill_count, int& fr_count,
+               std::unordered_map<std::string, std::unique_ptr<CustomAudio>>& soundBites);
 
 void display_hud(sf::RenderWindow& window,
                  Character& player_one,

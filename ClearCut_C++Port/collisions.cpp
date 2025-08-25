@@ -74,10 +74,10 @@ std::string collision_detection(const T& entity_one, const P& entity_two)
 
 
 
-void collision_check(Character& player_one, std::vector<std::unique_ptr<Platform>>& platform_list, std::vector<std::unique_ptr<Enemy>>& enemy_list, sf::Clock& health_delay_clock, int& fr_count){
+void collision_check(Character& player_one, std::vector<std::unique_ptr<Platform>>& platform_list, std::vector<std::unique_ptr<Enemy>>& enemy_list, sf::Clock& health_delay_clock, int& fr_count, std::unordered_map<std::string, std::unique_ptr<CustomAudio>>& soundBites){
     character_platform_collision(player_one, platform_list);
     enemy_platform_collision(enemy_list, platform_list);
-    character_enemy_collision(player_one, enemy_list, health_delay_clock, fr_count);
+    character_enemy_collision(player_one, enemy_list, health_delay_clock, fr_count, soundBites);
 };
 
 
@@ -106,17 +106,18 @@ void enemy_platform_collision(std::vector<std::unique_ptr<Enemy>>& enemy_list, s
 }
 
 
-void character_enemy_collision(Character& player_one, std::vector<std::unique_ptr<Enemy>>& enemy_list, sf::Clock& health_delay_clock, int& fr_count){
+void character_enemy_collision(Character& player_one, std::vector<std::unique_ptr<Enemy>>& enemy_list, sf::Clock& health_delay_clock, int& fr_count, std::unordered_map<std::string, std::unique_ptr<CustomAudio>>& soundBites){
     ;
     for (auto& enemy : enemy_list){
         if (collision_detection<Character, Enemy&> (player_one, *enemy) != "None" && player_one.canGetHit == true){
             player_one.health--;
             fr_count = 0;
-            sf::Texture trees_felled_texture;
-            if(!trees_felled_texture.loadFromFile("./All_Assets/Other Assets/treesFelledWhite.png")){
-                std::cerr << "Unable to load texture" << std::endl;
-            }
+//            sf::Texture trees_felled_texture;
+//            if(!trees_felled_texture.loadFromFile("./All_Assets/Other Assets/treesFelledWhite.png")){
+//                std::cerr << "Unable to load texture" << std::endl;
+//            }
             player_one.canGetHit = false;
+            soundBites.at("grunt")->play();
             break;
         }
     }
@@ -141,13 +142,15 @@ void bullet_enemy_collision(std::vector<Bullets>& active_bullets, std::vector<st
                     if(!(*enemyIt)->red_clock.isRunning()){
                         (*enemyIt)->red_clock.start();
                     }
-                    fr_count++;
                     active_bullets.erase(bulletIt);
                     bulletDeleted = true;
                     break;
                 }
                 else{
                     kill_count++;
+                    if(fr_count < 10){
+                        fr_count++;
+                    }
                     enemy_list.erase(enemyIt);
                     active_bullets.erase(bulletIt);
                     bulletDeleted = true;
