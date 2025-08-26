@@ -7,12 +7,22 @@ As the player progresses through the game and facing different enemies, fewer an
 
 <br>
 
+![Menu Screen](https://github.com/tgarvs/Clear-Cut-Port/blob/main/All_Assets/Backgrounds/menuscreen.png "Menu Screen")
+
+<br>
+
 ## How It's Made
 <br> 
 This game was originally written in Processing before being ported over to C++ within the SFML framework. Modern C++ was strongly kept in mind in this port, using stl containers, templates, etc. 
 All the art for this game was developed in various online pixel art applications, which can account for differently sized and shaded pixels. All the audio was either recorded or composed in a DAW or Max MSP and was played back using the SFML audio library.
 
 <br>
+
+
+![Stalker Sprite](https://github.com/tgarvs/Clear-Cut-Port/blob/main/All_Assets/Sprites/stalkerSprite.png "Stalker Sprite")
+
+![Stalker Sprite Red](https://github.com/tgarvs/Clear-Cut-Port/blob/main/All_Assets/Sprites/stalkerSpriteRed.png "Stalker Sprite Red")
+
 
 ## Lessons Learned
 <br>
