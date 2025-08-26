@@ -13,6 +13,7 @@ This game was originally written in Processing before being ported over to C++ w
 All the art for this game was developed in various online pixel art applications, which can account for differently sized and shaded pixels. All the music was either composed or recorded myself and was played back using the SFML audio library.
 
 <br>
+
 ## Lessons Learned
 <br>
 Look, the architecture of this game is rough. It was originally written in Processing using plenty of globals and little regard for memory safety. Porting it over to C++ has been an incredible learning experience for two reasons. First, it has helped me further practice my C++ outside of an Audio DSP context (which is a bit more my wheelhouse) and second, I have learned so many important lessons about game dev. While these things may seem simple to a more experience game dev, here are just a few things I did not implement in this game that I fully intend to utilize going forward.
