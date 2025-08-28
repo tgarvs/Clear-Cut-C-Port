@@ -7,12 +7,7 @@ As the player progresses through the game and facing different enemies, fewer an
 
 <br>
 
-## Video Overview of Game 
-A video discussing the design process of the game.
-
-<br>
-
-![Video Overview](https://github.com/tgarvs/Clear-Cut-Port/blob/main/ClearCutVideo.mp4 "Video Overview")
+![Menu Screen](https://github.com/tgarvs/Clear-Cut-Port/blob/main/All_Assets/Backgrounds/menuscreen.png "Menu Screen")
 
 <br>
 
